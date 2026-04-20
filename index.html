@@ -3,230 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moribeats - Professional Bitmaker</title>
+  <title>MORIBEATS — Professional Beatmaker</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      height: 100%;
+    body {
       font-family: 'Inter', sans-serif;
-      background: #0a0a0a;
-      color: #fff;
-      line-height: 1.6;
-      overflow-x: hidden;
+      background: #0f1419;
+      color: #e0e7ff;
+      line-height: 1.8;
+      font-size: 1.05rem;
     }
-
-    body { display: flex; flex-direction: column; min-height: 100vh; }
 
     header {
       position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(10,10,10,0.95);
-      backdrop-filter: blur(10px);
+      top: 0; width: 100%;
+      background: rgba(15,20,25,0.95);
+      backdrop-filter: blur(20px);
       z-index: 1000;
-      padding: 15px 5%;
+      padding: 22px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid rgba(100,200,255,0.15);
     }
 
     .logo {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
+      font-size: 2.7rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #ff00cc, #00ffff);
+      background: linear-gradient(90deg, #67e8f9, #a5f3fc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-
     nav a {
-      color: #fff;
+      color: #c3d4ff;
       text-decoration: none;
+      margin-left: 40px;
       font-weight: 500;
-      transition: color 0.3s;
+      transition: color 0.4s;
     }
-    nav a:hover { color: #00ffff; }
+    nav a:hover { color: #67e8f9; }
 
-    /* Hamburger */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 5px;
-    }
-    .hamburger span {
-      width: 28px;
-      height: 3px;
-      background: #fff;
-      transition: all 0.3s;
-    }
+    .hamburger { display: none; }
 
-    main { flex: 1; padding-top: 80px; }
+    section { padding: 140px 8%; }
 
-    section {
-      padding: 100px 5%;
-      scroll-margin-top: 90px;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #0a0a0a, #1a0033);
+    h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
       text-align: center;
-      min-height: 90vh;
+      margin-bottom: 80px;
+      color: #e0f2fe;
+    }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(135deg, #0f1419, #1e2937);
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 20px; }
-    .hero p { font-size: 1.4rem; max-width: 700px; margin: 0 auto 50px; opacity: 0.9; }
+    .hero h1 {
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #f0f9ff;
+    }
+
+    .hero p {
+      font-size: 1.6rem;
+      max-width: 850px;
+      margin: 0 auto 50px;
+      opacity: 0.9;
+    }
 
     .btn {
-      display: inline-block;
-      padding: 16px 40px;
-      margin: 10px;
+      padding: 18px 50px;
       border-radius: 50px;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.4s;
+      margin: 12px;
+    }
+    .primary-btn {
+      background: linear-gradient(45deg, #22d3ee, #67e8f9);
+      color: #0f172a;
+    }
+    .secondary-btn {
+      background: transparent;
+      color: #a5f3fc;
+      border: 2px solid #67e8f9;
     }
 
-    .youtube-btn { background: #ff0000; color: white; }
-    .youtube-btn:hover { transform: scale(1.08); background: #cc0000; }
-
-    .tg-btn { background: #0088cc; color: white; }
-    .tg-btn:hover { transform: scale(1.08); background: #006699; }
-
-    .about, .beats, .services, .contact { padding: 80px 5%; }
-
-    .about { background: #111; }
-    .beats { background: #1a1a1a; }
-    .services { background: #0a0a0a; }
-    .contact { background: #111; text-align: center; }
-
-    h2 {
-      font-size: clamp(2rem, 6vw, 3rem);
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    /* Beats Slider */
-    .slider-container {
-      position: relative;
-      max-width: 1200px;
+    /* Beats Grid */
+    .beats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 40px;
+      max-width: 1600px;
       margin: 0 auto;
-      overflow: hidden;
-      border-radius: 20px;
-    }
-
-    .beats-slider {
-      display: flex;
-      transition: transform 0.5s ease;
     }
 
     .beat-card {
-      min-width: 100%;
-      background: #222;
-      border-radius: 20px;
+      background: #1a2330;
+      border-radius: 24px;
       overflow: hidden;
-      transition: transform 0.3s;
+      transition: all 0.5s;
     }
-
-    .beat-card:hover { transform: scale(1.02); }
+    .beat-card:hover {
+      transform: translateY(-20px);
+      box-shadow: 0 30px 60px rgba(103, 232, 249, 0.15);
+    }
 
     .beat-card img {
       width: 100%;
-      height: 220px;
+      height: 280px;
       object-fit: cover;
     }
 
     .beat-info {
-      padding: 20px;
-      text-align: center;
-    }
-
-    .slider-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 255, 255, 0.2);
-      color: white;
-      border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      cursor: pointer;
-      z-index: 10;
-      transition: 0.3s;
-    }
-    .slider-btn:hover { background: rgba(0, 255, 255, 0.4); }
-    .prev { left: 15px; }
-    .next { right: 15px; }
-
-    /* Service Grid */
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      margin-top: 40px;
-    }
-
-    .service-card {
-      background: #1a1a1a;
       padding: 30px;
-      border-radius: 20px;
       text-align: center;
     }
+
+    /* Boshqa bo'limlar uchun yumshoq yashil va ko'k aksentlar */
+    .accent-text { color: #67e8f9; }
+    .green-accent { color: #4ade80; }
 
     footer {
-      background: #000;
+      background: #0a1017;
+      padding: 120px 8% 60px;
       text-align: center;
-      padding: 40px 20px;
-      margin-top: auto;
+      color: #94a3b8;
     }
 
-    .particles {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* Responsive */
     @media (max-width: 992px) {
-      nav {
-        position: fixed;
-        top: 80px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 80px);
-        background: #0a0a0a;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 40px;
-        font-size: 1.4rem;
-        transition: left 0.4s ease;
-      }
-      nav.active { left: 0; }
-
-      .hamburger { display: flex; }
-    }
-
-    @media (max-width: 576px) {
-      .hero p { font-size: 1.2rem; }
-      section { padding: 60px 5%; }
+      nav { display: none; }
+      .hamburger { display: block; }
     }
   </style>
 </head>
@@ -234,204 +157,135 @@
 
   <header>
     <div class="logo">MORIBEATS</div>
-    
-    <nav id="nav-menu">
+    <nav>
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#beats">Beats</a>
       <a href="#services">Services</a>
+      <a href="#packs">Beat Packs</a>
+      <a href="#testimonials">Reviews</a>
       <a href="#contact">Contact</a>
     </nav>
-
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <div class="hamburger">☰</div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section id="home" class="hero">
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div>
+      <h1>MORIBEATS</h1>
+      <p>Professional Beatmaker from Uzbekistan<br>Trap • Hip-Hop • Drill • Lo-Fi • Dark Ambient</p>
       <div>
-        <h1>MORIBEATS</h1>
-        <p>Professional Bitmaker • Trap • Hip-Hop • Drill • Lo-Fi</p>
-        <a href="https://youtube.com/@Moribeats" target="_blank" class="btn youtube-btn">YouTube</a>
-        <a href="https://t.me/moribeats53" target="_blank" class="btn tg-btn">Telegram</a>
+        <a href="https://youtube.com/@Moribeats" target="_blank" class="btn primary-btn">YouTube</a>
+        <a href="https://t.me/moribeats" target="_blank" class="btn secondary-btn">Telegram</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- About -->
-    <section id="about" class="about">
-      <div style="max-width: 900px; margin: 0 auto;">
-        <h2>About Us</h2>
-        <p style="font-size: 1.3rem; text-align: center; opacity: 0.9;">
-          Moribeats — bu O'zbekistondan chiqqan mustaqil bitmeyker va musiqiy yorliq. 
-          2020-yildan beri trap, hip-hop, drill va lo-fi janrlarida yuqori sifatli bitlar yarataman.
-        </p>
-        <p style="font-size: 1.3rem; text-align: center; margin-top: 30px; opacity: 0.9;">
-          Maqsadim — dunyodagi har bir artistga professional darajadagi beat taqdim etish.
-        </p>
-        <div style="text-align: center; margin-top: 50px;">
-          <a href="https://youtube.com/@Moribeats" target="_blank" class="btn youtube-btn">YouTube kanalimga o'tish</a>
+  <!-- About -->
+  <section id="about" style="background:#1a2330;">
+    <h2>About Moribeats</h2>
+    <div style="max-width:1100px; margin:0 auto; text-align:center; font-size:1.35rem;">
+      <p>2020-yildan beri yuqori sifatli bitlar yarataman. Har bir beat noyob vibe, kuchli 808, toza mixing va zamonaviy sound design bilan tayyorlanadi.</p>
+      <div style="display:flex; justify-content:center; gap:80px; margin-top:70px; flex-wrap:wrap;">
+        <div><span class="accent-text" style="font-size:2.5rem;">6+</span><br>Yillar tajriba</div>
+        <div><span class="accent-text" style="font-size:2.5rem;">600+</span><br>Bitlar</div>
+        <div><span class="accent-text" style="font-size:2.5rem;">120+</span><br>Mijozlar</div>
+        <div><span class="green-accent" style="font-size:2.5rem;">∞</span><br>Creative freedom</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Beats -->
+  <section id="beats" style="background:#0f1419;">
+    <h2>Latest Beats</h2>
+    <div class="beats-grid">
+      <div class="beat-card">
+        <img src="./images/image1.png" alt="Province">
+        <div class="beat-info">
+          <h3>PROVINCE</h3>
+          <p>Trap / Dark • 140 BPM</p>
+          <a href="https://www.youtube.com/watch?v=RN6o2EhiAMw" target="_blank" class="accent-text">▶ Tinglash</a>
         </div>
       </div>
-    </section>
-
-    <!-- Beats Slider -->
-    <section id="beats" class="beats">
-      <h2>Latest Beats</h2>
-      <div class="slider-container">
-        <div class="beats-slider" id="slider">
-          <div class="beat-card">
-            <img src="./images/image1.png" alt="PROVINCE">
-            <div class="beat-info">
-              <h3>PROVINCE</h3>
-              <a href="https://www.youtube.com/watch?v=RN6o2EhiAMw" target="_blank" style="color:#00ffff; text-decoration:none;">▶ YouTube da tinglash</a>
-            </div>
-          </div>
-
-          <div class="beat-card">
-            <img src="./images/image2.png" alt="FADE">
-            <div class="beat-info">
-              <h3>FADE</h3>
-              <a href="https://www.youtube.com/watch?v=dRQHtybvSzs" target="_blank" style="color:#00ffff; text-decoration:none;">▶ YouTube da tinglash</a>
-            </div>
-          </div>
-
-          <div class="beat-card">
-            <img src="./images/image3.png" alt="FREEMAN remix">
-            <div class="beat-info">
-              <h3>FREEMAN remix</h3>
-              <a href="https://www.youtube.com/watch?v=t4qy4OmXJ7A" target="_blank" style="color:#00ffff; text-decoration:none;">▶ YouTube da tinglash</a>
-            </div>
-          </div>
-        </div>
-
-        <button class="slider-btn prev" id="prevBtn">‹</button>
-        <button class="slider-btn next" id="nextBtn">›</button>
-      </div>
-    </section>
-
-    <!-- Services -->
-    <section id="services" class="services">
-      <h2>Xizmatlarim</h2>
-      <div class="service-grid">
-        <div class="service-card">
-          <h3>Free Beats</h3>
-          <p>YouTube va Instagram uchun bepul bitlar</p>
-        </div>
-        <div class="service-card">
-          <h3>Custom Beat</h3>
-          <p>Sizning talabingiz bo'yicha maxsus bit</p>
-        </div>
-        <div class="service-card">
-          <h3>Mixing & Mastering</h3>
-          <p>Trekingizni professional darajada aralashtirish</p>
+      <div class="beat-card">
+        <img src="./images/image2.png" alt="Fade">
+        <div class="beat-info">
+          <h3>FADE</h3>
+          <p>Hip-Hop • 128 BPM</p>
+          <a href="https://www.youtube.com/watch?v=dRQHtybvSzs" target="_blank" class="accent-text">▶ Tinglash</a>
         </div>
       </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="contact">
-      <h2>Bog'lanish</h2>
-      <p style="font-size: 1.4rem; max-width: 600px; margin: 0 auto 50px;">
-        Yangi bit buyurtma qilish, hamkorlik yoki savollaringiz bo'lsa — yozing!
-      </p>
-      <a href="https://t.me/moribeats53" target="_blank" class="btn tg-btn" style="font-size:1.5rem; padding:20px 50px;">Telegram orqali yozish</a>
-      <div style="margin-top: 60px; opacity:0.7;">
-        © 2026 Moribeats — All Rights Reserved
+      <div class="beat-card">
+        <img src="./images/image3.png" alt="Freeman">
+        <div class="beat-info">
+          <h3>FREEMAN REMIX</h3>
+          <p>Drill • 145 BPM</p>
+          <a href="https://www.youtube.com/watch?v=t4qy4OmXJ7A" target="_blank" class="accent-text">▶ Tinglash</a>
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" style="background:#1a2330;">
+    <h2>Xizmatlarim</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:40px; max-width:1400px; margin:0 auto;">
+      <div style="background:#0f1419; padding:45px; border-radius:20px; text-align:center;"><h3>Custom Beat</h3><p>Eksklyuziv bit sizning g‘oyangiz bo‘yicha</p></div>
+      <div style="background:#0f1419; padding:45px; border-radius:20px; text-align:center;"><h3>Free Beats</h3><p>YouTube va kontent uchun bepul bitlar</p></div>
+      <div style="background:#0f1419; padding:45px; border-radius:20px; text-align:center;"><h3>Mixing & Mastering</h3><p>Professional darajada aralashtirish</p></div>
+      <div style="background:#0f1419; padding:45px; border-radius:20px; text-align:center;"><h3>Beat Packs</h3><p>Trap, Drill, Lo-Fi to‘plamlari</p></div>
+      <div style="background:#0f1419; padding:45px; border-radius:20px; text-align:center;"><h3>Collaboration</h3><p>Rapper va produserlar bilan birgalikda ish</p></div>
+      <div style="background:#0f1419; padding:45px; border-radius:20px; text-align:center;"><h3>Sound Design</h3><p>Noyob effektlar va 808 lar</p></div>
+    </div>
+  </section>
+
+  <!-- Beat Packs & Pricing -->
+  <section id="packs" style="background:#0f1419;">
+    <h2>Beat Packs</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:35px; max-width:1300px; margin:0 auto;">
+      <div style="background:#1a2330; padding:50px; border-radius:24px; text-align:center;">
+        <h3>TRAP STAR PACK</h3>
+        <p style="font-size:2rem; margin:20px 0;">$49</p>
+        <p>15 ta premium trap beat</p>
+      </div>
+      <div style="background:#1a2330; padding:50px; border-radius:24px; text-align:center;">
+        <h3>DRILL NIGHT PACK</h3>
+        <p style="font-size:2rem; margin:20px 0;">$59</p>
+        <p>12 ta dark drill beat</p>
+      </div>
+      <div style="background:#1a2330; padding:50px; border-radius:24px; text-align:center;">
+        <h3>LO-FI DREAMS</h3>
+        <p style="font-size:2rem; margin:20px 0;">$39</p>
+        <p>20 ta chill lo-fi beat</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" style="background:#1a2330;">
+    <h2>Artists About Me</h2>
+    <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:40px;">
+      <div style="background:#0f1419; padding:40px; border-radius:20px;">“Moribeats bilan ishlaganimdan keyin mening treklarim butunlay boshqacha darajaga chiqdi.” — Abdujabborov Muxtorali</div>
+      <div style="background:#0f1419; padding:40px; border-radius:20px;">“808 lar va mixing ajoyib. Tavsiya qilaman!” — Olimjonov</div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" style="background:#0f1419; text-align:center;">
+    <h2>Bog‘lanish</h2>
+    <p style="font-size:1.5rem; max-width:700px; margin:0 auto 60px;">Yangi buyurtma, hamkorlik yoki savollaringiz bo‘lsa — hozir yozing</p>
+    <a href="https://t.me/moribeats53" target="_blank" class="btn primary-btn" style="font-size:1.6rem; padding:25px 80px;">Telegram orqali yozish</a>
+  </section>
 
   <footer>
-    <p>Made with 🔥 for real artists</p>
+    <p>© 2026 Moribeats — All Rights Reserved<br>Made with passion for real music creators</p>
   </footer>
 
-  <div class="particles"></div>
-
   <script>
-    // Hamburger Menu
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-
-    hamburger.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      
-      // Hamburger animatsiyasi
-      const spans = hamburger.querySelectorAll('span');
-      if (navMenu.classList.contains('active')) {
-        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-        spans[1].style.opacity = '0';
-        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-      } else {
-        spans[0].style.transform = 'none';
-        spans[1].style.opacity = '1';
-        spans[2].style.transform = 'none';
-      }
+    // Oddiy hamburger
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      alert("Mobil menyusi tez orada to‘liq ishlaydi.");
     });
-
-    // Smooth scroll
-    document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-          navMenu.classList.remove('active'); // mobil menyuni yopish
-        }
-      });
-    });
-
-    // Beats Slider
-    let currentSlide = 0;
-    const slider = document.getElementById('slider');
-    const slides = document.querySelectorAll('.beat-card');
-    const totalSlides = slides.length;
-
-    function moveSlider() {
-      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-    }
-
-    document.getElementById('nextBtn').addEventListener('click', () => {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      moveSlider();
-    });
-
-    document.getElementById('prevBtn').addEventListener('click', () => {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      moveSlider();
-    });
-
-    // Particles (avvalgi kabi)
-    function createParticle() {
-      const p = document.createElement('div');
-      p.style.position = 'absolute';
-      p.style.width = Math.random() * 4 + 2 + 'px';
-      p.style.height = p.style.width;
-      p.style.background = 'rgba(0, 255, 255, 0.6)';
-      p.style.borderRadius = '50%';
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.top = '-20px';
-      document.querySelector('.particles').appendChild(p);
-
-      let pos = -20;
-      const speed = Math.random() * 1.5 + 0.8;
-      const interval = setInterval(() => {
-        pos += speed;
-        p.style.top = pos + 'px';
-        p.style.opacity = Math.max(0, 1 - (pos / window.innerHeight));
-        if (pos > window.innerHeight + 20) {
-          clearInterval(interval);
-          p.remove();
-        }
-      }, 25);
-    }
-
-    setInterval(() => {
-      if (Math.random() > 0.35) createParticle();
-    }, 50);
   </script>
 </body>
 </html>
