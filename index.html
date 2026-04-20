@@ -48,7 +48,48 @@
     }
     nav a:hover { color: #67e8f9; }
 
-    .hamburger { display: none; }
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #67e8f9;
+      transition: color 0.3s;
+    }
+    .hamburger:hover { color: #a5f3fc; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 20, 25, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(100, 200, 255, 0.15);
+      z-index: 999;
+      padding: 30px 8%;
+      flex-direction: column;
+      gap: 20px;
+      animation: slideDown 0.3s ease;
+    }
+
+    .mobile-menu.active { display: flex; }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .mobile-menu a {
+      color: #c3d4ff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(100, 200, 255, 0.1);
+      transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: #67e8f9; }
+    .mobile-menu a:last-child { border-bottom: none; }
 
     section { padding: 140px 8%; }
 
@@ -150,6 +191,27 @@
     @media (max-width: 992px) {
       nav { display: none; }
       .hamburger { display: block; }
+      section { padding: 100px 5%; }
+      h2 { font-size: 2.5rem; margin-bottom: 60px; }
+      .beats-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+    }
+    @media (max-width: 768px) {
+      header { padding: 16px 5%; }
+      .logo { font-size: 2rem; }
+      .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
+      .hero p { font-size: 1.3rem; }
+      .btn { padding: 15px 35px; font-size: 1rem; }
+      section { padding: 80px 5%; }
+      h2 { font-size: 2rem; }
+    }
+    @media (max-width: 500px) {
+      section { padding: 60px 4%; }
+      h2 { font-size: 1.8rem; margin-bottom: 40px; }
+      .beat-card img { height: 200px; }
+      .beat-info { padding: 20px; }
+      .beats-grid { grid-template-columns: 1fr; }
+      .btn { display: block; margin: 10px auto; width: 90%; }
+      .hero div > div { display: flex; flex-direction: column; }
     }
   </style>
 </head>
@@ -166,8 +228,18 @@
       <a href="#testimonials">Reviews</a>
       <a href="#contact">Contact</a>
     </nav>
-    <div class="hamburger">☰</div>
+    <div class="hamburger" id="hamburger">☰</div>
   </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#beats">Beats</a>
+    <a href="#services">Services</a>
+    <a href="#packs">Beat Packs</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#contact">Contact</a>
+  </div>
 
   <!-- Hero -->
   <section id="home" class="hero">
@@ -282,9 +354,147 @@
   </footer>
 
   <script>
-    // Oddiy hamburger
-    document.querySelector('.hamburger').addEventListener('click', () => {
-      alert("Mobil menyusi tez orada to‘liq ishlaydi.");
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileMenu.classList.toggle('active');
+    });
+
+    // Close mobile menu when link is clicked
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('header') && !e.target.closest('.mobile-menu')) {
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    // Smooth scrolling for navigation links
+    const allLinks = document.querySelectorAll('a[href^="#"]');
+    allLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && document.querySelector(href)) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          const headerHeight = document.querySelector('header').offsetHeight;
+          const targetPosition = target.offsetTop - headerHeight;
+
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Smooth fade-in animation for sections
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(30px)';
+      section.style.transition = 'all 0.8s ease';
+      observer.observe(section);
+    });
+
+    // Beat card click interactions
+    const beatCards = document.querySelectorAll('.beat-card');
+    beatCards.forEach((card, index) => {
+      card.style.animation = `fadeInUp 0.6s ease ${index * 0.15}s both`;
+    });
+
+    // Add animation keyframes dynamically
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .beat-card a {
+        display: inline-block;
+        font-size: 1.1rem;
+        margin-top: 15px;
+        transition: all 0.3s;
+      }
+
+      .beat-card a:hover {
+        transform: scale(1.1);
+        text-shadow: 0 0 10px rgba(103, 232, 249, 0.6);
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Header scroll effect
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.style.borderBottomColor = 'rgba(100, 200, 255, 0.3)';
+        header.style.background = 'rgba(15, 20, 25, 0.98)';
+      } else {
+        header.style.borderBottomColor = 'rgba(100, 200, 255, 0.15)';
+        header.style.background = 'rgba(15, 20, 25, 0.95)';
+      }
+    });
+
+    // Active navigation link highlight
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const sections = document.querySelectorAll('section');
+      const headerHeight = header.offsetHeight;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= sectionTop - headerHeight - 100) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      document.querySelectorAll('nav a').forEach(link => {
+        link.style.color = '#c3d4ff';
+        if (link.getAttribute('href') === `#${current}`) {
+          link.style.color = '#67e8f9';
+          link.style.textShadow = '0 0 20px rgba(103, 232, 249, 0.4)';
+        } else {
+          link.style.textShadow = 'none';
+        }
+      });
+    });
+
+    // Prevent default action for external links with better handling
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        // Allow natural behavior for external links
+      });
     });
   </script>
 </body>
